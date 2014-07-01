@@ -30,45 +30,47 @@
 		</nav>
 	</header>
 	<div id="backgrounds"></div>
-	<div id="wrapper" class="hfeed">
-		<script>
-			document.getElementsByName('s')[0].placeholder='Buscar';
-			jQuery(document).ready(function(){
-				var header = jQuery('body');
-
-				var backgrounds = new Array(
-					'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo1.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo2.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo3.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo4.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo5.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo6.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo7.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo8.JPG)'
-					, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo9.JPG)'
-					);
-
-				var current = 0;
-
-				function nextBackground() {
-					current++;
-					current = current % backgrounds.length;
-					jQuery('#backgrounds').css('background-image', backgrounds[current]);
-				}
-				setInterval(nextBackground, 10000);
-
-				jQuery('#backgrounds').css('background-image', backgrounds[0]);
-			});
-		</script>
 	<script>
-		jQuery(window).scroll(function(){
-			if(jQuery(document).scrollTop() > jQuery('#header').height()) {
+		document.getElementsByName('s')[0].placeholder='Buscar';
+		jQuery(document).ready(function(){
+			var header = jQuery('body');
+
+			var backgrounds = new Array(
+				'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo1.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo2.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo3.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo4.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo5.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo6.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo7.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo8.JPG)'
+				, 'url('+window.location.origin+'/gomezMorin/images/backgrounds/fondo9.JPG)'
+				);
+
+			var current = 0;
+
+			function nextBackground() {
+				current++;
+				current = current % backgrounds.length;
+				jQuery('#backgrounds').css('background-image', backgrounds[current]);
+			}
+			setInterval(nextBackground, 10000);
+
+			jQuery('#backgrounds').css('background-image', backgrounds[0]);
+		});
+</script>
+<script>
+	jQuery(window).scroll(function(){
+		if(jQuery(document).scrollTop() > jQuery('#header').height()) {
 			// put content here for if the page has scrolled 200 pixels
 			jQuery('#header').addClass('minimized');
 			jQuery('#logo').addClass('minimized');
 			jQuery('#branding').addClass('minimized');
 			jQuery('#menu').addClass('minimized');
 			jQuery('#search-destroy').addClass('minimized');
+			jQuery('#wrapper').css({
+				"margin-top": jQuery('#header').height()
+			});
 		}
 		else{
 			jQuery('#header').removeClass('minimized');
@@ -76,8 +78,19 @@
 			jQuery('#branding').removeClass('minimized');
 			jQuery('#menu').removeClass('minimized');
 			jQuery('#search-destroy').removeClass('minimized');
+			jQuery('#wrapper').css({
+				"margin-top": "0"
+			});
 		}
-		});
-	</script>
+	});
+</script>
+<div id="wrapper" class="hfeed">
+	<?php
+	$children = get_pages('child_of='.$post->ID);
+	//if( count( $children ) != 0 ) { 
+		print '<div class="titulo-seccion" id='.strtolower(get_the_title()).'>'.get_the_title().'</div>';
+	//}
+	?>
 
-<div id="container">
+
+	<div id="container">
