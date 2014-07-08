@@ -12,7 +12,7 @@ get_header(); ?>
 <?php  ?>
 
 <div id="main-content" class="main-content">
-	<style>.right{float:right}</style>
+	<style>.right{float:right; padding:10px; background:white;}</style>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
 			<section class="right">
