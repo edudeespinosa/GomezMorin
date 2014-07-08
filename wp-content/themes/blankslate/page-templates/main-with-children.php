@@ -42,7 +42,7 @@ get_header();
 					<?php while ( $parent->have_posts() ) : $parent->the_post();?>
 						<li>
 							<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>
-							<a href="<?php /*the_permalink();*/ $url ?>">
+							<a href="<?php /*the_permalink();*/ echo $url ?>">
 								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="320" width="620" title="<?php print the_title(); ?>">
 							</a>
 						</li>
