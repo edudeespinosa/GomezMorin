@@ -92,13 +92,13 @@ function create_event_postype() {
 		'has_archive' => true,
 		'_builtin' => false,
 		'capability_type' => 'post',
-		'hierarchical' => false,
+		'hierarchical' => true,
 		'supports'=> array('title', 'thumbnail') ,
 		'show_in_nav_menus' => true,
-		'taxonomies' => array( 'tf_eventcategory', 'post_tag')
+		'taxonomies' => array( 'categorias_ceceq', 'post_tag')
 		);
 
-	register_post_type( 'tf_events', $args);
+	register_post_type( 'eventos_ceceq', $args);
 
 }
 
@@ -121,7 +121,7 @@ function create_eventcategory_taxonomy() {
 		'choose_from_most_used' => __( 'Seleccionar de las categorías más usadas' ),
 		);
 
-	register_taxonomy('tf_eventcategory','tf_events', array(
+	register_taxonomy('categorias_ceceq','eventos_ceceq', array(
 		'label' => __('Categorías de evento'),
 		'labels' => $labels,
 		'hierarchical' => true,
@@ -134,32 +134,32 @@ function create_eventcategory_taxonomy() {
 add_action( 'init', 'create_eventcategory_taxonomy', 0 );
 
 
-add_filter ("manage_edit-tf_events_columns", "tf_events_edit_columns");
-add_action ("manage_posts_custom_column", "tf_events_custom_columns");
+add_filter ("manage_edit-eventos_ceceq_columns", "eventos_ceceq_edit_columns");
+add_action ("manage_posts-custom_column", "eventos_ceceq_custom_columns");
 
-function tf_events_edit_columns($columns) {
+function eventos_ceceq_edit_columns($columns) {
 
 	$columns = array(
 		"cb" => "<input type=\"checkbox\" />",
 		"title" => "Event",
-		"tf_col_ev_cat" => "Categoría",
-		"tf_col_ev_date" => "Fechas",
-		"tf_col_ev_times" => "Horas",
-		"tf_col_ev_thumb" => "Thumbnail",
-		"tf_col_ev_desc" => "Descripción",
+		"ceceq_col_ev_cat" => "Categoría",
+		"ceceq_col_ev_date" => "Fechas",
+		"ceceq_col_ev_times" => "Horas",
+		"ceceq_col_ev_thumb" => "Thumbnail",
+		"ceceq_col_ev_desc" => "Descripción"
 		);
 	return $columns;
 }
 
-function tf_events_custom_columns($column)
+function eventos_ceceq_custom_columns($column)
 {
 	global $post;
 	$custom = get_post_custom();
 	switch ($column)
 	{
-		case "tf_col_ev_cat":
+		case "ceceq_col_ev_cat":
     // - show taxonomy terms -
-		$eventcats = get_the_terms($post->ID, "tf_eventcategory");
+		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
 		$eventcats_html = array();
 		if ($eventcats) {
 			foreach ($eventcats as $eventcat)
@@ -169,24 +169,24 @@ function tf_events_custom_columns($column)
 			_e('None', 'themeforce');;
 		}
 		break;
-		case "tf_col_ev_date":
+		case "ceceq_col_ev_date":
     // - show dates -
-		$startd = $custom["tf_events_startdate"][0];
-		$endd = $custom["tf_events_enddate"][0];
+		$startd = $custom["eventos_ceceq_startdate"][0];
+		$endd = $custom["eventos_ceceq_enddate"][0];
 		$startdate = date("F j, Y", $startd);
 		$enddate = date("F j, Y", $endd);
 		echo $startdate . '<br /><em>' . $enddate . '</em>';
 		break;
-		case "tf_col_ev_times":
+		case "ceceq_col_ev_times":
     // - show times -
-		$startt = $custom["tf_events_startdate"][0];
-		$endt = $custom["tf_events_enddate"][0];
+		$startt = $custom["eventos_ceceq_startdate"][0];
+		$endt = $custom["eventos_ceceq_enddate"][0];
 		$time_format = get_option('time_format');
 		$starttime = date($time_format, $startt);
 		$endtime = date($time_format, $endt);
 		echo $starttime . ' - ' .$endtime;
 		break;
-		case "tf_col_ev_thumb":
+		case "ceceq_col_ev_thumb":
     // - show thumb -
 		$post_image_id = get_post_thumbnail_id(get_the_ID());
 		if ($post_image_id) {
@@ -199,30 +199,32 @@ function tf_events_custom_columns($column)
 			echo '&h=60&w=60&zc=1" alt="" />';
 		}
 		break;
-		case "tf_col_ev_desc";
-		the_excerpt();
+		case "ceceq_col_ev_desc":
+		$descripcion = $custom["eventos_ceceq_descripcion"][0];
+		echo $descripcion;
+		//the_excerpt();
 		break;
 
 	}
 }
 
-add_action( 'admin_init', 'tf_events_create' );
+add_action( 'admin_init', 'eventos_ceceq_create' );
 
-function tf_events_create() {
-	add_meta_box('tf_events_meta', 'Events', 'tf_events_meta', 'tf_events');
+function eventos_ceceq_create() {
+	add_meta_box('eventos_ceceq_meta', 'Events', 'eventos_ceceq_meta', 'eventos_ceceq');
 }
 
-function tf_events_meta () {
+function eventos_ceceq_meta () {
 
 // - grab data -
 
 	global $post;
 	$custom = get_post_custom($post->ID);
-	$meta_sd = $custom["tf_events_startdate"][0];
-	$meta_ed = $custom["tf_events_enddate"][0];
+	$meta_sd = $custom["eventos_ceceq_startdate"][0];
+	$meta_ed = $custom["eventos_ceceq_enddate"][0];
 	$meta_st = $meta_sd;
 	$meta_et = $meta_ed;
-
+	$meta_desc = $custom["eventos_ceceq_descripcion"][0];
 // - grab wp time format -
 
 $date_format = get_option('date_format'); // Not required in my code
@@ -230,29 +232,29 @@ $time_format = get_option('time_format');
 
 // - populate today if empty, 00:00 for time -
 
-if ($meta_sd == null) { $meta_sd = time(); $meta_ed = $meta_sd; $meta_st = 0; $meta_et = 0;}
+if ($meta_sd == null) { $meta_sd = time(); $meta_ed = $meta_sd; $meta_st = 12; $meta_et = 12;}
 
 // - convert to pretty formats -
 
 $clean_sd = date("D, M d, Y", $meta_sd);
 $clean_ed = date("D, M d, Y", $meta_ed);
-$clean_st = date($time_format, $meta_st);
-$clean_et = date($time_format, $meta_et);
+$clean_st = date("H:i", $meta_st);
+$clean_et = date("H:i", $meta_et);
 
 // - security -
 
-echo '<input type="hidden" name="tf-events-nonce" id="tf-events-nonce" value="' .
-wp_create_nonce( 'tf-events-nonce' ) . '" />';
+echo '<input type="hidden" name="ceceq-events-nonce" id="ceceq-events-nonce" value="' .
+wp_create_nonce( 'ceceq-events-nonce' ) . '" />';
 
 // - output -
-
 ?>
-<div class="tf-meta">
+<div class="ceceq-meta">
 	<ul>
-		<li><label>Fecha de inicio</label><input name="tf_events_startdate" class="tfdate" value="<?php echo $clean_sd; ?>" /></li>
-		<li><label>Fecha de fin</label><input name="tf_events_enddate" class="tfdate" value="<?php echo $clean_ed; ?>" /></li>
-		<li><label>Hora de inicio</label><input name="tf_events_starttime" value="<?php echo $clean_st; ?>" /><em>Formato de 24h(7pm = 19:00)</em></li>
-		<li><label>Hora de fin</label><input name="tf_events_endtime" value="<?php echo $clean_et; ?>" /><em>Formato de 24h (7pm = 19:00)</em></li>
+		<li><label>Fecha de inicio</label><input readonly="true" name="eventos_ceceq_startdate" class="tfdate" value="<?php echo $clean_sd; ?>" /></li>
+		<li><label>Fecha de fin</label><input readonly="true" name="eventos_ceceq_enddate" class="tfdate" value="<?php echo $clean_ed; ?>" /></li>
+		<li><label>Hora de inicio</label><input name="eventos_ceceq_starttime" value="<?php echo $clean_st; ?>" type="time"/><em>Formato de 24h(7pm = 19:00)</em></li>
+		<li><label>Hora de fin</label><input name="eventos_ceceq_endtime" value="<?php echo $clean_et; ?>" type="time"/><em>Formato de 24h (7pm = 19:00)</em></li>
+		<li><label>Descripción del evento</label><textarea name="eventos_ceceq_descripcion"><?php echo $meta_desc ?></textarea></li>
 	</ul>
 </div>
 
@@ -267,7 +269,7 @@ function guardar_evento(){
 
 // - still require nonce
 
-	if ( isset( $_POST['tf-events-nonce'] ) && ! wp_verify_nonce( $_POST['tf-events-nonce'], 'tf-events-nonce' ) ) {
+	if ( isset( $_POST['ceceq-events-nonce'] ) && ! wp_verify_nonce( $_POST['ceceq-events-nonce'], 'ceceq-events-nonce' ) ) {
 		return $post->ID;
 	}
 
@@ -277,17 +279,24 @@ function guardar_evento(){
 
 // - convert back to unix & update post
 
-	if(!isset($_POST["tf_events_startdate"])):
+	if(!isset($_POST["eventos_ceceq_startdate"])):
 		return $post;
 	endif;
-	$updatestartd = strtotime ( $_POST["tf_events_startdate"] . $_POST["tf_events_starttime"] );
-	update_post_meta($post->ID, "tf_events_startdate", $updatestartd );
+	$updatestartd = strtotime ( $_POST["eventos_ceceq_startdate"] . $_POST["eventos_ceceq_starttime"] );
+	update_post_meta($post->ID, "eventos_ceceq_startdate", $updatestartd );
 
-	if(!isset($_POST["tf_events_enddate"])):
+	if(!isset($_POST["eventos_ceceq_enddate"])):
 		return $post;
 	endif;
-	$updateendd = strtotime ( $_POST["tf_events_enddate"] . $_POST["tf_events_endtime"]);
-	update_post_meta($post->ID, "tf_events_enddate", $updateendd );
+	$updateendd = strtotime ( $_POST["eventos_ceceq_enddate"] . $_POST["eventos_ceceq_endtime"]);
+	update_post_meta($post->ID, "eventos_ceceq_enddate", $updateendd );
+
+	if(!isset($_POST["eventos_ceceq_descripcion"])):
+		return $post;
+	endif;
+	$updatedesc =  ( $_POST["eventos_ceceq_descripcion"] );
+	update_post_meta($post->ID, "eventos_ceceq_descripcion", $updatedesc );
+
 }
 
 add_filter('post_updated_messages', 'events_updated_messages');
@@ -296,7 +305,7 @@ function events_updated_messages( $messages ) {
 
 	global $post, $post_ID;
 
-	$messages['tf_events'] = array(
+	$messages['eventos_ceceq'] = array(
     0 => '', // Unused. Messages start at index 1.
     1 => sprintf( __('Event updated. <a href="%s">View item</a>'), esc_url( get_permalink($post_ID) ) ),
     2 => __('Custom field updated.'),
@@ -321,14 +330,14 @@ return $messages;
 
 function events_styles() {
 	global $post_type;
-	if( 'tf_events' != $post_type )
+	if( 'eventos_ceceq' != $post_type )
 		return;
 	wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
 }
 
 function events_scripts() {
 	global $post_type;
-	if( 'tf_events' != $post_type )
+	if( 'eventos_ceceq' != $post_type )
 		return;
 	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
@@ -342,8 +351,8 @@ add_action( 'admin_print_scripts-post.php', 'events_scripts', 1000 );
 add_action( 'admin_print_scripts-post-new.php', 'events_scripts', 1000 );
 
 function my_scripts_method() {
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.min.js' );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.min.js' );
 }
 
 add_action( 'wp_enqueue_scripts', 'my_scripts_method' );

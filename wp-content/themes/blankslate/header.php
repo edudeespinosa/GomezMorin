@@ -87,9 +87,11 @@
 <div id="wrapper" class="hfeed">
 	<?php
 	$children = get_pages('child_of='.$post->ID);
-	//if( count( $children ) != 0 ) { 
+	if( count( $children ) != 0 ) { 
 		print '<div class="titulo-seccion" id='.strtolower(get_the_title()).'>'.get_the_title().'</div>';
-	//}
+	}
+	else
+		print '<div class="titulo-seccion" id="none">'.get_the_title().'</div>'
 	?>
 
 
