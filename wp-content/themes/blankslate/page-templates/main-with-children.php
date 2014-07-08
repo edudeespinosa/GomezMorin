@@ -17,7 +17,6 @@ get_header();
 				$parent_perm = basename(get_permalink($post->post_parent));
 				$perm = basename(get_permalink());
 				if(strcmp($parent_perm, $perm)!=0) $perm = $parent_perm."-".$perm;
-				echo $perm;
 				if(!is_front_page())
 					$args = array(
 						'post_type' => 'eventos_ceceq',
