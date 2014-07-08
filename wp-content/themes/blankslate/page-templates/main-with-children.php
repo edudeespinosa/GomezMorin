@@ -41,7 +41,8 @@ get_header();
 				<ul class="bjqs">
 					<?php while ( $parent->have_posts() ) : $parent->the_post();?>
 						<li>
-							<a href="<?php the_permalink(); ?>">
+							<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>
+							<a href="<?php /*the_permalink();*/ $url ?>">
 								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="320" width="620" title="<?php print the_title(); ?>">
 							</a>
 						</li>
@@ -89,8 +90,7 @@ get_header();
 						$title = current(explode(' ', get_the_title()));
 						?>
 						<li id="<?php the_ID(); ?>" class="<?php if($i%2==0){ print $left;} else print $right; $i++;?> children">
-							<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>
-							<a href="<?php /*the_permalink();*/ $url ?>">
+							<a href="<?php the_permalink(); ?>">
 								<?php if ( has_post_thumbnail( ) ) { ?>
 								<div id="<?php print the_ID();?>" style="background: url('<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>') no-repeat; background-size: cover;">
 								</div>
