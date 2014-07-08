@@ -16,6 +16,7 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
 			<section class="right">
+			<ul class="list-unstyled">
 				<?php 
 				$parent_perm = basename(get_permalink($post->post_parent));
 				$perm = basename(get_permalink());
@@ -29,7 +30,7 @@ get_header(); ?>
 					'categorias_ceceq' => $perm
 					);
 				query_posts( $args );
-				?>
+				?>	
 				<?php
 				// Start the Loop.
 				while ( have_posts() ) : the_post();
@@ -48,14 +49,17 @@ get_header(); ?>
 				$meta_ed = date("D, M d, Y", $meta_ed);
 				$meta_st = date("H:i a", $meta_st);
 				$meta_et = date("H:i a", $meta_et);
+				echo "<li>";
 				echo the_title();
 				echo "<p>Descripción del evento: $descripcion</p>";
 				echo "<p>Fecha de inicio: $meta_sd</p>";
 				echo "<p>Fecha de fin: $meta_ed</p>";
 				echo "<p>Hora de inicio: $meta_st</p>";
 				echo "<p>Hora de inicio: $meta_et</p>";
+				echo "</li>";
 				endwhile;
 				?>
+				</ul>
 			</section>
 		</div><!-- #content -->
 	</div><!-- #primary -->
