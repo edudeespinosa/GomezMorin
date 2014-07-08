@@ -12,7 +12,7 @@ get_header(); ?>
 <?php  ?>
 
 <div id="main-content" class="main-content">
-<style>.right{float:right}</style>
+	<style>.right{float:right}</style>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
 			<section class="right">
@@ -44,6 +44,10 @@ get_header(); ?>
 				$meta_ed = $custom["eventos_ceceq_enddate"][0];
 				$meta_st = $meta_sd;
 				$meta_et = $meta_ed;
+				$meta_sd = date("D, M d, Y", $meta_sd);
+				$meta_ed = date("D, M d, Y", $meta_ed);
+				$meta_st = date("H:i", $meta_st);
+				$meta_et = date("H:i", $meta_et);
 				echo "<p>Descripción del evento: $descripcion</p>";
 				echo "<p>Fecha de inicio: $meta_sd</p>";
 				echo "<p>Fecha de fin: $meta_ed</p>";
