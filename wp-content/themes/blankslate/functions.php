@@ -352,7 +352,7 @@ add_action( 'admin_print_scripts-post-new.php', 'events_scripts', 1000 );
 
 function my_scripts_method() {
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.min.js' );
+	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
 }
 
 add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
