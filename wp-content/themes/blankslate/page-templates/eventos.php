@@ -48,6 +48,7 @@ get_header(); ?>
 				$meta_ed = date("D, M d, Y", $meta_ed);
 				$meta_st = date("H:i a", $meta_st);
 				$meta_et = date("H:i a", $meta_et);
+				echo the_title();
 				echo "<p>Descripción del evento: $descripcion</p>";
 				echo "<p>Fecha de inicio: $meta_sd</p>";
 				echo "<p>Fecha de fin: $meta_ed</p>";
