@@ -18,6 +18,7 @@ get_header(); ?>
 				<?php the_content() ?>
 			<?php endwhile; // end of the loop. ?>
 		</div><!-- #content -->
+			<?php echo get_social_media(); ?>
 	</div><!-- #primary -->
 </div><!-- #main-content -->
 

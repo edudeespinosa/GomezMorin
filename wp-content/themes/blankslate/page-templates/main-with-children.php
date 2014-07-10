@@ -12,6 +12,7 @@ get_header();
 <div id="main-content" class="main-content">
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
+		<?php //echo do_shortcode( '[contact-form-7 id="468" title="Contact form 1"]' );?>
 			<div id="banner-slide">
 				<?php 
 				$parent_perm = basename(get_permalink($post->post_parent));
@@ -43,7 +44,7 @@ get_header();
 						<li>
 							<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>
 							<a target="_blank" href="<?php /*the_permalink();*/ echo $url ?>">
-								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="320" width="620" title="<?php print the_title(); ?>">
+								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="480" width="840" title="<?php print the_title(); ?>">
 							</a>
 						</li>
 					<?php endwhile; ?>
@@ -55,8 +56,8 @@ get_header();
 
 				jQuery('#banner-slide').bjqs({
 					animtype      : 'slide',
-					height        : 320,
-					width         : 620,
+					height        : 480,
+					width         : 840,
 					responsive    : true,
 					randomstart   : true
 				});
@@ -105,10 +106,11 @@ get_header();
 				</ul>
 			<?php endif; wp_reset_query(); ?>
 		</div>
+		<?php echo get_social_media(); ?>
 	</div>		
 </div>
 </div>
-
+<div id="fb-root"></div>
 
 <?php
 get_sidebar();

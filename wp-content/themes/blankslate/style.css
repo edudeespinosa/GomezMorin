@@ -20,7 +20,6 @@ html, body, #container { height: 100%; }
 body > #container { height: auto; min-height: 100%; }
 #container{
 	margin-bottom: 200px;
-	padding-bottom: 200px;
 	padding-left: 50px;
 	padding-right: 50px;
 }
@@ -202,6 +201,14 @@ section#search-destroy {
 	padding-left: 16px;
 }
 
+#suscription input[type="email"]{
+	border: none;
+	height: 27px;
+	font-size: 1em;
+	vertical-align: bottom;
+	padding-left: 16px;
+}
+
 .screen-reader-text{
 	display: none;
 }
@@ -229,16 +236,26 @@ section#search-destroy {
 
 /*Social*/
 
-.social{
+.minimized .social{
 	float: right;
 	text-align: center;
 	width: 100%;
 }
-
+.minimized .social li{
+	width: 25px;
+	height: 25px;
+}
 .social li{
 	display: inline-block;
 	width: 50px;
 	height: 50px;
+}
+
+#search-destroy>div{
+	display: inline-block;
+	margin-left: 50px;
+	margin-top: 15px;
+	vertical-align: bottom;
 }
 
 #youtube{
@@ -303,6 +320,18 @@ section#search-destroy {
 	height: 10px;
 }
 
+#search-destroy.minimized>div{
+	margin-left: 0;
+}
+
+#search-destroy.minimized #searchsubmit{
+	width: 25px;
+	height: 25px;
+}
+
+.ajax-loader{
+	display: none;
+}
 #wrapper{
 	padding-top: 0;
 }
@@ -360,6 +389,10 @@ section#search-destroy {
 	display: inline-block;
 }
 
+.subsecciones{
+	display: inline-block;
+}
+
 .even-children li{
 	text-align: center;
 	margin: 20px auto;
@@ -400,6 +433,7 @@ p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bot
 #banner-fade,
 #banner-slide{
 	margin-bottom: 60px;
+	margin: 60px auto;
 }
 
 ul.bjqs-controls.v-centered li a{
@@ -438,6 +472,30 @@ p.bjqs-caption{
 	font-size: 1.2em;
 }
 
+/*------------Social feed-------------*/
+.social-media{
+	margin-top: 30px;
+}
+
+.social-media li{
+	display: inline-block;
+}
+
+/*Twitter timeline*/
+#twitter-box{
+	width: 400px;
+	height: 500px;
+}
+
+/*Facebook timeline*/
+.fb-like-box{
+	background: white;
+}
+
+#facebook-box{
+	float: right;
+}
+
 /*RESPONSIVE DESIGN*/
 
 @media all and (max-width: 1366px) {
@@ -450,6 +508,8 @@ p.bjqs-caption{
 }
 @media all and (max-width: 320px) {
 }
+
+
 
 
 

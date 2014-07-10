@@ -16,13 +16,18 @@
 			<div id="site-description"><?php bloginfo( 'description' ); ?></div>
 		</section>
 		<section id="search-destroy">
-			<ul class="social inline">
-				<a href="#"><li id="youtube"></li></a>
-				<a href="#"><li id="facebook"></li></a>
-				<a href="#"><li id="twitter"></li></a>
-			</ul>
+			<div class="social inline">
+				<ul >
+					<a href="#"><li id="youtube"></li></a>
+					<a href="#"><li id="facebook"></li></a>
+					<a href="#"><li id="twitter"></li></a>
+				</ul>
+			</div>
 			<div id="search">
 				<?php get_search_form(); ?>
+			</div>
+			<div id="suscription">
+				<?php get_suscription_form(); ?>
 			</div>
 		</section>
 		<nav id="menu" role="navigation">
@@ -30,6 +35,14 @@
 		</nav>
 	</header>
 	<div id="backgrounds"></div>
+	<script>(function(d, s, id) {//facebook timeline
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
 	<script>
 		document.getElementsByName('s')[0].placeholder='Buscar';
 		jQuery(document).ready(function(){

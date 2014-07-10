@@ -14,6 +14,12 @@ function blankslate_setup()
 add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
 function blankslate_load_scripts()
 {
+	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
+	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
+	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions.js', array('jquery'));
+	wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
+	wp_enqueue_script('datepicker', get_bloginfo('template_url').'/calendar/jquery.ui.datepicker-es.js', array('jquery'));
+
 	wp_enqueue_script( 'jquery' );
 }
 add_action( 'comment_form_before', 'blankslate_enqueue_comment_reply_script' );
@@ -337,8 +343,8 @@ function events_styles() {
 
 function events_scripts() {
 	global $post_type;
-	if( 'eventos_ceceq' != $post_type )
-		return;
+	//if( 'eventos_ceceq' != $post_type )
+	//	return;
 	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
 	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions.js', array('jquery'));
@@ -357,6 +363,22 @@ function my_scripts_method() {
 
 add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
 
+function get_social_media(){
+	return '		
+	<ul class="social-media">
+		<li id="twitter-box">
+			<a class="twitter-timeline" href="https://twitter.com/Central_CECEQ" data-widget-id="487090241400893440">Tweets by @Central_CECEQ</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		</li>
+		<li id="facebook-box">
+			<div class="fb-like-box" data-href="https://www.facebook.com/centralCECEQ" data-width="400" data-height="600" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
+		</li>
+	</ul>
+	';
+}
 
+function get_suscription_form(){
+	echo do_shortcode( '[contact-form-7 id="469" title="Suscripción cartelera"]' );
+}
 
 ?>
