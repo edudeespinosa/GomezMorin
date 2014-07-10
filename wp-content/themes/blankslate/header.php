@@ -6,6 +6,7 @@
 	<title><?php wp_title( ' | ', true, 'right' ); ?></title>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
+	<?php my_scripts_method() ?>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
