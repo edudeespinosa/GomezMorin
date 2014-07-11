@@ -421,6 +421,7 @@ section#search-destroy {
 .contenedor-eventos{
 	padding: 10px;
 	display: inline-block;
+	background: white;
 }
 
 .calendario-eventos{
