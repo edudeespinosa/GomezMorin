@@ -9,63 +9,38 @@
 get_header(); ?>
 
 
-<?php events_scripts(); ?>
+<?php blankslate_load_scripts(); ?>
 
 <div id="main-content" class="main-content">
 	<style>.right{float:right; padding:10px; background:white;} li{margin-bottom: 10px;}</style>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
-			<section class="left">
-				<input type="text" id="calendar"/>
-				<div class="calendario"></div>
-			</section>
-			<section class="right">
-				<ul class="list-unstyled">
-					<?php 
-					$parent_perm = basename(get_permalink($post->post_parent));
+			<div class="eventos">
+				<div class="calendario-eventos">
+					<?php 					$parent_perm = basename(get_permalink($post->post_parent));
 					$perm = basename(get_permalink());
 					if(strcmp($parent_perm, $perm)!=0) $parent_perm2 = $parent_perm."-".$perm;
-			//parent_perm: para los que no son de actividades
-			//parent_perm2: para los que son de actividades
+				//parent_perm: para los que no son de actividades
+				//parent_perm2: para los que son de actividades
 					if((strcmp($parent_perm, 'adultos')==0)||strcmp($parent_perm, 'ninos')==0) $perm = $parent_perm2;
-					else $perm = $parent_perm;
-					$args = array (
-						'post_type' => 'eventos_ceceq',
-						'categorias_ceceq' => $perm
-						);
-					query_posts( $args );
-					?>	
-					<?php
-				// Start the Loop.
-					while ( have_posts() ) : the_post();
-				//the_post_thumbnail();
-					$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
-					echo "<a href='$url' target='_blank'>";
-					the_post_thumbnail( 'medium' );
-					echo "</a>";
-					$custom = get_post_custom($post->ID);
-					$descripcion = $custom["eventos_ceceq_descripcion"][0];
-					$meta_sd = $custom["eventos_ceceq_startdate"][0];
-					$meta_ed = $custom["eventos_ceceq_enddate"][0];
-					$meta_st = $meta_sd;
-					$meta_et = $meta_ed;
-					$meta_sd = date("D, M d, Y", $meta_sd);
-					$meta_ed = date("D, M d, Y", $meta_ed);
-					$meta_st = date("H:i a", $meta_st);
-					$meta_et = date("H:i a", $meta_et);
-					echo "<li>";
-					echo the_title();
-					echo "<p>Descripción del evento: $descripcion</p>";
-					echo "<p>Fecha de inicio: $meta_sd</p>";
-					echo "<p>Fecha de fin: $meta_ed</p>";
-					echo "<p>Hora de inicio: $meta_st</p>";
-					echo "<p>Hora de inicio: $meta_et</p>";
-					echo "</li>";
-					endwhile;
-					?>
-				</ul>
-			</section>
-			<?php echo get_social_media() ?>
+					else $perm = $parent_perm;?>
+					<form id="ajax-form" method="post" action="">
+						<input type="text" hidden=true value='<?php echo $perm ?>' id="perm"/>
+						<input type="text" id="calendar" name="calendar"/>
+						<input type="submit" name="buscar" value="buscar"/>
+					</form>
+					<div class="calendario"></div>
+				</div>
+				<div class="contenedor-eventos">
+					<ul class="list-unstyled" id="posts_container">
+					</ul>
+				</div>
+			</div>
+			<div class="abajo-eventos">
+				<section>
+					<?php echo get_social_media() ?>
+				</section>	
+			</div>		
 		</div><!-- #content -->
 	</div><!-- #primary -->
 </div><!-- #main-content -->

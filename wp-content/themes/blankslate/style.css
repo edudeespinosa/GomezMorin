@@ -308,6 +308,7 @@ section#search-destroy {
 }
 #search-destroy.minimized{
 	right: 0;
+	position: absolute;
 	width: 15vw;
 	background: white;
 	top: 53px;
@@ -415,7 +416,18 @@ section#search-destroy {
 	margin-bottom: 100px;
 }
 
+/*Calendario de eventos */
 
+.contenedor-eventos{
+	padding: 10px;
+	display: inline-block;
+}
+
+.calendario-eventos{
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 33%;
+}
 /*slider*/
 /* Basic jQuery Slider essential styles */
 

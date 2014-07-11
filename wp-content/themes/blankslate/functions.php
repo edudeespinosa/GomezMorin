@@ -11,16 +11,16 @@ function blankslate_setup()
 		array( 'main-menu' => __( 'Main Menu', 'blankslate' ) )
 		);
 }
-add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
+//add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
 function blankslate_load_scripts()
 {
-	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
-	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
-	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions.js', array('jquery'));
-	wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
-	wp_enqueue_script('datepicker', get_bloginfo('template_url').'/calendar/jquery.ui.datepicker-es.js', array('jquery'));
-
 	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
+	wp_enqueue_script( 'mi-script-ajax',get_bloginfo('template_url') . '/calendar/search-events.js', array( 'jquery' ) );
+	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions2.js', array('jquery'));
+	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
+	wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
+	wp_localize_script( 'mi-script-ajax', 'MyAjax', array( 'url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('myajax-post-comment-nonce' )) );
 }
 add_action( 'comment_form_before', 'blankslate_enqueue_comment_reply_script' );
 function blankslate_enqueue_comment_reply_script()
@@ -343,8 +343,8 @@ function events_styles() {
 
 function events_scripts() {
 	global $post_type;
-	//if( 'eventos_ceceq' != $post_type )
-	//	return;
+	if( 'eventos_ceceq' != $post_type )
+		return;
 	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
 	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions.js', array('jquery'));
@@ -361,7 +361,7 @@ function my_scripts_method() {
 	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
 }
 
-add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
+//add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
 
 function get_social_media(){
 	return '		
@@ -381,4 +381,84 @@ function get_suscription_form(){
 	echo do_shortcode( '[contact-form-7 id="469" title="Suscripción cartelera"]' );
 }
 
+add_action('wp_ajax_buscar_posts', 'buscar_posts_callback');
+add_action('wp_ajax_nopriv_buscar_posts', 'buscar_posts_callback');
+
+function buscar_posts_callback() {
+	global $post;
+	$nonce = $_POST['nonce'];
+	if ( ! wp_verify_nonce( $nonce, 'myajax-post-comment-nonce' ) )
+		die ( 'Te atrapamos maldito!');
+	$my_time = time();
+	$perm = $_POST['perm'];
+	$fecha = $_POST['valor'];
+	if($fecha!=null)
+		$my_time = strtotime($fecha); 
+
+
+	$args = array (
+		'post_type' => 'eventos_ceceq',
+		'tax_query' => array(
+			array('taxonomy' => 'categorias_ceceq',
+				'field' => 'slug',
+				'terms' => $perm
+				)
+			),
+		/*array(
+			'relation' => 'and',
+			array(
+				'key' => 'eventos_ceceq_startdate',
+				'value' => ($my_time),
+				'compare' => '>=',
+				'type' => 'NUMERIC'
+				),
+			array(
+				'key' => 'eventos_ceceq_enddate[0]',
+				'value' => ($my_time),
+				'compare' => '>=',
+				'type' => 'NUMERIC'
+				)
+	)*/
+	);
+	query_posts( $args );
+	// Start the Loop.
+	$i = 0;
+	while ( have_posts() ) : the_post();
+	$custom = get_post_custom($post->ID);
+	$descripcion = $custom["eventos_ceceq_descripcion"][0];
+	$meta_sd = $custom["eventos_ceceq_startdate"][0];
+	$meta_ed = $custom["eventos_ceceq_enddate"][0];
+	$meta_st = $meta_sd;
+	$meta_et = $meta_ed;
+	if($meta_sd<= $my_time && $meta_ed>=$my_time){
+		$i++;
+		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+		echo "<a href='$url' target='_blank'>";
+		the_post_thumbnail( 'medium' );
+		echo "</a>";
+		$meta_sd = date("D, M d, Y", $meta_sd);
+		$meta_ed = date("D, M d, Y", $meta_ed);
+		$meta_st = date("H:i a", $meta_st);
+		$meta_et = date("H:i a", $meta_et);
+		echo "<li>";
+		echo "<p style='font-size:2em;'>".get_the_title()."</p>";
+		echo "<p>Descripción del evento: $descripcion</p>";
+		echo "<p>Fecha de inicio: $meta_sd</p>";
+		echo "<p>Fecha de fin: $meta_ed</p>";
+		echo "<p>Hora de inicio: $meta_st</p>";
+		echo "<p>Hora de fin: $meta_et</p>";
+		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
+		$eventcats_html = array();
+		if ($eventcats) {
+			foreach ($eventcats as $eventcat)
+				array_push($eventcats_html, $eventcat->name);
+			echo implode($eventcats_html, ", ");
+		}
+		echo "</li>";
+	}
+	endwhile;
+	if(!have_posts()||$i==0)
+		echo "No hay eventos con sus parámetros.";
+}
 ?>
+

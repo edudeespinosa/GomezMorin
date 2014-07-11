@@ -8,7 +8,10 @@
  */
 get_header(); 
 ?>
-
+<?php 
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
+?>
 <div id="main-content" class="main-content">
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
