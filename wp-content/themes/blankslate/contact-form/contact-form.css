@@ -1,0 +1,173 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+	font-family: 'FontAwesome', sans-serif;
+}
+
+*
+{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #999;
+    font-size: 13px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #999;
+    font-size: 13px;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #999;
+    font-size: 13px;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #999;
+    font-size: 13px;
+}
+
+
+.fh2
+{
+	text-align: center;
+}
+form#frmContact
+{  
+	margin: 0 auto;
+	width: 30%;
+	font-size: 13px;
+	font-family: Arial;
+}
+
+.input-prepend
+{
+	margin: 10px 0;
+}
+
+.input-prepend .add-on {
+	border-radius: 4px 0 0 4px;
+	background-color: #c60135;
+	height: 28px;
+	padding: 3px;
+	float: left;
+	/* border: 1px solid #111; */
+	width: 30px;
+	text-align: center;
+}
+
+
+.input-prepend  input, textarea
+{
+
+	border-radius: 0 4px 4px 0;
+	width: 85%;
+	min-width:  200px;
+	padding-left: 10px;
+	vertical-align: top;
+}
+
+.input-prepend  textarea
+{
+	margin: 0 0 0 -1px;
+	padding: 5px 10px;
+	font-family: Arial;
+	font-size: 13px;
+	border-radius: 0 4px 4px 4px;
+	resize: vertical;
+	min-height: 200px;
+}
+
+.input-prepend  input
+{
+	height: 28px;
+	border-left: none;
+}
+
+.errorLabel
+{
+}
+
+.validLabel
+{
+	background-color: #EEEEEE !important;
+}
+
+.indication
+{
+	margin: 0;
+	padding: 3px;
+	text-align: center;
+	border: 1px dashed #999;
+	color: #222;
+	font-size: 13px;
+}
+
+.errorMess
+{
+	color: #ff0000 !important;
+}
+
+.error:not(input):not(textarea)
+{
+	color: red;
+	padding-left: 20px;
+	font-size: 16px;
+	font-family: Arial;
+	text-align: center;
+	background: white;
+}
+
+.error:not(label)
+{
+}
+
+input[type=submit]#contactSubmit{
+	float:right;
+	cursor:pointer;
+	background:none;
+	border:none;
+	font-family: 'Arial';
+	color:#555;
+	font-weight: bold;
+	font-size:18px;
+	padding:10px 25px;
+	position: relative;
+	margin-top: 15px;
+	border:1px solid #B0B0B0;
+	text-shadow: 0px 1px  1px #E8E8E8;
+	background: rgb(247,247,247);
+	border-radius:5px;
+	box-shadow:0px 1px 1px #FFF inset,	
+	0 0 0px 5px #EAEAEA;
+	transition:all 0.2s linear;
+}
+
+input[type=submit]#contactSubmit:hover{
+	color:#686868;
+	border-color: #CECECE;
+	background: rgb(244,244,244);
+	box-shadow:0px 1px 1px #FFF inset,
+	0 0 0px 5px #E0E0E0;        
+}
+
+input[type=submit]#contactSubmit:active,
+input[type=submit]#contactSubmit:focus{
+	position:relative;
+	top:1px;
+	color:#515151;
+	background: rgb(234,234,234);
+	box-shadow:0px -1px 1px #FFF inset,
+	0 0 0px 5px #E0E0E0;
+}
+
+.thanks {
+width: 50%;
+margin: 0 auto;
+text-align: center;
+font-size: 35px;
+}
