@@ -47,7 +47,7 @@ $asunto = $_POST['frmSubject']; // not required
 $comments = $_POST['frmMessage']; // required
 $error_message = "";
 $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
-$email_message = "Form details below.\n\n";
+$email_message = "Una forma de contacto ha sido llenada. Detalles:\n\n";
 function clean_string($string) {
 	$bad = array("content-type","bcc:","to:","cc:","href");
 	return str_replace($bad,"",$string);
@@ -57,6 +57,7 @@ $email_message .= "Email: ".clean_string($email_from)."\n";
 $email_message .= "Asunto: ".clean_string($asunto)."\n";
 $email_message .= "Mensaje: ".clean_string($comments)."\n";
 // create email headers
+$email_to = get_option('admin_email');
 $email_subject = clean_string($asunto);
 $headers = 'From: '.$email_from."\r\n".
 'Reply-To: '.$email_from."\r\n" .

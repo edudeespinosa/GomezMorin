@@ -58,11 +58,19 @@ body{
 
 /* Columns CPT Events */
 
+.widefat td, .widefat th{
+	vertical-align: middle;
+}
+
 th#tf_col_ev_date, th#tf_col_ev_cat {width:150px}
 td.tf_col_ev_date em {color:gray;}
 th#tf_col_ev_times {width:150px}
 th#tf_col_ev_thumb {width:100px}
 
+
+.calendario>.ui-datepicker{
+	width: 225px;
+}
 
 /*-----------------------------------------------------------------HEADERS--------------------------------------------------------------------------------------------------------*/
 
@@ -430,12 +438,13 @@ section#search-destroy {
 	padding: 10px;
 	display: inline-block;
 	background: white;
+	max-width: 400px;
 }
 
 .calendario-eventos{
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 33%;
+	margin-right: 246px;
 }
 /*slider*/
 /* Basic jQuery Slider essential styles */
@@ -493,6 +502,11 @@ p.bjqs-caption{
 	font-size: 1.2em;
 }
 
+.sala-prensa-content{
+	padding: 20px;
+	font-size: 1.2em;
+}
+
 /*------------Social feed-------------*/
 .social-media{
 	margin-top: 30px;
@@ -517,7 +531,13 @@ p.bjqs-caption{
 	float: right;
 }
 
+/*Sala de prensa*/
 
+object{
+	display: block;
+	margin: 0 auto;
+	background: transparent;
+}
 
 /*RESPONSIVE DESIGN*/
 

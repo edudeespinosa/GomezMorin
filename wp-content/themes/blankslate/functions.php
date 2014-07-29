@@ -14,13 +14,15 @@ function blankslate_setup()
 //add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
 function blankslate_load_scripts()
 {
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
-	wp_enqueue_script( 'mi-script-ajax',get_bloginfo('template_url') . '/calendar/search-events.js', array( 'jquery' ) );
-	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions2.js', array('jquery'));
-	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
-	wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
-	wp_localize_script( 'mi-script-ajax', 'MyAjax', array( 'url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('myajax-post-comment-nonce' )) );
+	if(!is_admin()){
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
+		wp_enqueue_script( 'mi-script-ajax',get_bloginfo('template_url') . '/calendar/search-events.js', array( 'jquery' ) );
+		wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions2.js', array('jquery'));
+		wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
+		wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
+		wp_localize_script( 'mi-script-ajax', 'MyAjax', array( 'url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('myajax-post-comment-nonce' )) );
+	}
 }
 add_action( 'comment_form_before', 'blankslate_enqueue_comment_reply_script' );
 function blankslate_enqueue_comment_reply_script()
@@ -141,7 +143,6 @@ add_action( 'init', 'create_eventcategory_taxonomy', 0 );
 
 
 add_filter ("manage_edit-eventos_ceceq_columns", "eventos_ceceq_edit_columns");
-add_action ("manage_posts-custom_column", "eventos_ceceq_custom_columns");
 
 function eventos_ceceq_edit_columns($columns) {
 
@@ -157,10 +158,11 @@ function eventos_ceceq_edit_columns($columns) {
 	return $columns;
 }
 
+add_action ("manage_eventos_ceceq_posts_custom_column", "eventos_ceceq_custom_columns");
 function eventos_ceceq_custom_columns($column)
 {
 	global $post;
-	$custom = get_post_custom();
+	$custom = get_post_custom($post->ID);
 	switch ($column)
 	{
 		case "ceceq_col_ev_cat":
@@ -196,13 +198,10 @@ function eventos_ceceq_custom_columns($column)
     // - show thumb -
 		$post_image_id = get_post_thumbnail_id(get_the_ID());
 		if ($post_image_id) {
-			$thumbnail = wp_get_attachment_image_src( $post_image_id, 'post-thumbnail', false);
-			if ($thumbnail) (string)$thumbnail = $thumbnail[0];
-			echo '<img src="';
-			echo bloginfo('template_url');
-			echo '/timthumb/timthumb.php?src=';
-			echo $thumbnail;
-			echo '&h=60&w=60&zc=1" alt="" />';
+			$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+			echo "<a href='$url' target='_blank'>";
+			the_post_thumbnail( 'thumbnail' );
+			echo "</a>";
 		}
 		break;
 		case "ceceq_col_ev_desc":
@@ -345,7 +344,6 @@ function events_scripts() {
 	global $post_type;
 	if( 'eventos_ceceq' != $post_type )
 		return;
-	wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 	wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
 	wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions.js', array('jquery'));
 }
@@ -357,8 +355,10 @@ add_action( 'admin_print_scripts-post.php', 'events_scripts', 1000 );
 add_action( 'admin_print_scripts-post-new.php', 'events_scripts', 1000 );
 
 function my_scripts_method() {
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
+	if(!is_admin()){
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
+	}
 }
 
 //add_action( 'wp_enqueue_scripts', 'my_scripts_method' );

@@ -26,10 +26,10 @@ get_header(); ?>
 					else $perm = $parent_perm;?>
 					<form id="ajax-form" method="post" action="">
 						<input type="text" hidden=true value='<?php echo $perm ?>' id="perm"/>
-						<input type="text" id="calendar" name="calendar"/>
+						<input type="text" id="calendar" hidden=true name="calendar"/>
+						<div class="calendario"></div>
 						<input type="submit" name="buscar" value="buscar"/>
 					</form>
-					<div class="calendario"></div>
 				</div>
 				<div class="contenedor-eventos">
 					<ul class="list-unstyled" id="posts_container">
