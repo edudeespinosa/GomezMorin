@@ -365,15 +365,15 @@ function my_scripts_method() {
 
 function get_social_media(){
 	return '		
-	<ul class="social-media">
-		<li id="twitter-box">
+	<div class="social-media row">
+		<div id="twitter-box" class="">
 			<a class="twitter-timeline" href="https://twitter.com/Central_CECEQ" data-widget-id="487090241400893440">Tweets by @Central_CECEQ</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-		</li>
-		<li id="facebook-box">
-			<div class="fb-like-box" data-href="https://www.facebook.com/centralCECEQ" data-width="400" data-height="600" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
-		</li>
-	</ul>
+		</div>
+		<div id="facebook-box" class="">
+			<div class="fb-like-box" data-href="https://www.facebook.com/centralCECEQ" data-height="600" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
+		</div>
+	</div>
 	';
 }
 
@@ -404,21 +404,6 @@ function buscar_posts_callback() {
 				'terms' => $perm
 				)
 			),
-		/*array(
-			'relation' => 'and',
-			array(
-				'key' => 'eventos_ceceq_startdate',
-				'value' => ($my_time),
-				'compare' => '>=',
-				'type' => 'NUMERIC'
-				),
-			array(
-				'key' => 'eventos_ceceq_enddate[0]',
-				'value' => ($my_time),
-				'compare' => '>=',
-				'type' => 'NUMERIC'
-				)
-	)*/
 	);
 	query_posts( $args );
 	// Start the Loop.
@@ -433,6 +418,8 @@ function buscar_posts_callback() {
 	if($meta_sd<= $my_time && $meta_ed>=$my_time){
 		$i++;
 		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+		echo "<li class=\"text-center\">";
+		echo "<h2 class=\"titulo\">".get_the_title()."</h2>";
 		echo "<a href='$url' target='_blank'>";
 		the_post_thumbnail( 'medium' );
 		echo "</a>";
@@ -440,25 +427,19 @@ function buscar_posts_callback() {
 		$meta_ed = date("D, M d, Y", $meta_ed);
 		$meta_st = date("H:i a", $meta_st);
 		$meta_et = date("H:i a", $meta_et);
-		echo "<li>";
-		echo "<p style='font-size:2em;'>".get_the_title()."</p>";
-		echo "<p>Descripción del evento: $descripcion</p>";
-		echo "<p>Fecha de inicio: $meta_sd</p>";
-		echo "<p>Fecha de fin: $meta_ed</p>";
-		echo "<p>Hora de inicio: $meta_st</p>";
-		echo "<p>Hora de fin: $meta_et</p>";
+		echo "<h4>Descripción del evento: $descripcion</h4>";
+		echo "<h4>Fecha de inicio: $meta_sd</h4>";
+		echo "<h4>Fecha de fin: $meta_ed</h4>";
+		echo "<h4>Hora de inicio: $meta_st</h4>";
+		echo "<h4>Hora de fin: $meta_et</h4>";
 		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
 		$eventcats_html = array();
-		if ($eventcats) {
-			foreach ($eventcats as $eventcat)
-				array_push($eventcats_html, $eventcat->name);
-			echo implode($eventcats_html, ", ");
-		}
 		echo "</li>";
 	}
 	endwhile;
 	if(!have_posts()||$i==0)
 		echo "No hay eventos con sus parámetros.";
+	echo "<div class='invisible'>";
 }
 ?>
 

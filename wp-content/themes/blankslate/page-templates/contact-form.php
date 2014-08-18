@@ -58,6 +58,7 @@ $email_message .= "Asunto: ".clean_string($asunto)."\n";
 $email_message .= "Mensaje: ".clean_string($comments)."\n";
 // create email headers
 $email_to = get_option('admin_email');
+$email_to = "edude.espinosa@gmail.com";
 $email_subject = clean_string($asunto);
 $headers = 'From: '.$email_from."\r\n".
 'Reply-To: '.$email_from."\r\n" .
