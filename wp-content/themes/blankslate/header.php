@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width" />
 	<title><?php wp_title( ' | ', true, 'right' ); ?></title>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

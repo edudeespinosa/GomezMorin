@@ -535,6 +535,7 @@ p.bjqs-caption{
 	padding: 20px;
 	background: white;
 	font-size: 1.2em;
+	margin-bottom: 30px;
 }
 
 .sala-prensa-content{
@@ -591,11 +592,53 @@ object{
 	text-transform: capitalize;
 }
 
+
+ul.event-data{
+	font-size: 1.3em;
+}
+
+article>section>img{
+	width: 100%;
+	height: auto;
+}
 /*RESPONSIVE DESIGN*/
 
 @media all and (max-width: 1366px) {
+	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 75%;}
+	#menu.minimized{width: 91vw;}
+	#logo.minimized{height: 63px;}
+	#branding.minimized{max-height: 80px;}
+	form#frmContact{width: 50%;}
+}
+@media all and (max-width: 1280px) {
+	#menu.minimized{font-size: .8em;}
+	#wrapper{width: 800px;}
+	.even-children li div{width: 300px; height: 150px;}
+	ul.bjqs li{width: 700px !important;}
+	#banner-slide{min-width: 700px !important;}
+	#search-destroy input[type="submit"]{width: 25px; height: 25px;}
+	.social li{width: 25px; height: 25px}
+	#header input[type="text"], #header input[type="email"]{width: 75%;}
+	.calendario-eventos{width: 42% !important;}
 }
 @media all and (max-width: 960px) {
+	#search-destroy>div{width: 20%; float: right;}
+	.social li{width: 25px; height: 25px}
+	#search-destroy.minimized>div{width: 100%; float: none;}
+	#search-destroy input[type="submit"]{width: 25px; height: 25px;}
+	#header input[type="text"], #header input[type="email"]{width: 75%;}
+	#logo{height: 75px;}
+	#menu.minimized{width: 90vw;}
+	#logo.minimized{height: 82px;}
+	#branding.minimized{max-height: 87px;}
+	#menu-menu{font-size: .9em;}
+	#wrapper{width: 700px;}
+	.even-children li div{width: 250px; height: 125px;}
+	ul.bjqs li{width: 600px !important;}
+	#banner-slide{min-width: 600px !important;}
+	.calendario-eventos{width: 42% !important;}
+	#twitter-box{margin-right: 0}
+	#facebook-box{margin-left: 0}
 }
 @media all and (max-width: 768px) {
 }
