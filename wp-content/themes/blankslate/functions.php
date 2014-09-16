@@ -586,7 +586,7 @@ function buscar_todos_posts_callback() {
 	$meta_ed = $custom["eventos_ceceq_enddate"][0];
 	$meta_st = $meta_sd;
 	$meta_et = $meta_ed;
-	if($meta_sd<= $my_time && $meta_ed>=$my_time){
+	if(($meta_st<= $my_time+86399 && $meta_et>=$my_time)){
 		$i++;
 		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 		echo "<li class=\"text-center\">";
@@ -594,8 +594,8 @@ function buscar_todos_posts_callback() {
 		echo "<a href='$url' target='_blank'>";
 		the_post_thumbnail( 'medium' );
 		echo "</a>";
-		$meta_sd = date("D, M d, Y", $meta_sd);
-		$meta_ed = date("D, M d, Y", $meta_ed);
+		$meta_sd = date("d/m/Y", $meta_sd);
+		$meta_ed = date("d/m/Y", $meta_ed);
 		$meta_st = date("H:i a", $meta_st);
 		$meta_et = date("H:i a", $meta_et);
 		echo "<h4>Descripción del evento: $descripcion</h4>";
