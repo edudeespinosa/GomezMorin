@@ -8,11 +8,24 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
 	<?php wp_head(); ?>
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+			/* prepend menu icon */
+			$('#title-area').append('<div id="mobile-menu"></div>');
+
+			/* toggle nav */
+			$("#mobile-menu").on("click", function(){
+				$("#nav_menu-2").slideToggle();
+				$(this).toggleClass("active");
+			});
+		});
+	</script>
+
 </head>
 <body <?php body_class(); ?>>
 	<div class="loader"></div>
 	<script type="text/javascript">
-	jQuery(window).load(function() {
+		jQuery(window).load(function() {
 			jQuery(".loader").fadeOut("slow");
 		})
 	</script>
@@ -64,6 +77,7 @@
 		<div id="site-title"><?php if ( ! is_singular() ) { echo '<h1>'; } ?><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( get_bloginfo( 'name' ), 'blankslate' ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></a><?php if ( ! is_singular() ) { echo '</h1>'; } ?></div>
 		<div id="site-description"><?php bloginfo( 'description' ); ?></div>
 	</section>
+	<div class="gobierno"></div>
 	<section id="search-destroy">
 		<div class="social inline">
 			<ul >

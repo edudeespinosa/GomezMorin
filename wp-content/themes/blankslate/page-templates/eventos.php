@@ -16,7 +16,7 @@ get_header(); ?>
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
 			<div class="eventos">
-				<div class="calendario-eventos col-md-6">
+				<div class="calendario-eventos">
 					<?php 					$parent_perm = basename(get_permalink($post->post_parent));
 					$perm = basename(get_permalink());
 					if(strcmp($parent_perm, $perm)!=0) $parent_perm2 = $parent_perm."-".$perm;

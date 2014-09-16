@@ -19,6 +19,8 @@ function blankslate_load_scripts()
 		wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
 		wp_enqueue_script( 'mi-script-ajax',get_bloginfo('template_url') . '/calendar/search-events.js', array( 'jquery' ) );
 		wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions2.js', array('jquery'));
+		wp_enqueue_script( 'mi-script-ajax_2',get_bloginfo('template_url') . '/calendar/search-all-events.js', array( 'jquery' ) );
+		wp_enqueue_script('custom_script_2', get_bloginfo('template_url').'/calendar/functions3.js', array('jquery'));
 		wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 		wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
 		wp_enqueue_style('bootstrap', "http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css");
@@ -412,6 +414,10 @@ function my_scripts_method() {
 }
 
 //add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
+function extra_setup() {
+register_nav_menu ('primary mobile', __( 'Navigation Mobile', 'blankslate' ));
+}
+add_action( 'after_setup_theme', 'extra_setup' );
 
 function get_social_media(){
 	return '
@@ -548,7 +554,62 @@ function buscar_posts_callback() {
 	}
 	endwhile;
 	if(!have_posts()||$i==0)
-		echo "No hay eventos con sus parámetros.";
+		echo "No hay eventos en ese día.";
+	echo "<div class='invisible'>";
+}
+
+add_action('wp_ajax_buscar_todos_posts', 'buscar_todos_posts_callback');
+add_action('wp_ajax_nopriv_buscar_todos_posts', 'buscar_todos_posts_callback');
+
+
+function buscar_todos_posts_callback() {
+	global $post;
+	$nonce = $_POST['nonce'];
+	if ( ! wp_verify_nonce( $nonce, 'myajax-post-comment-nonce' ) )
+		die ( 'Te atrapamos maldito!');
+	$my_time = time();
+	$fecha = $_POST['valor'];
+	if($fecha!=null)
+		$my_time = strtotime($fecha); 
+
+
+	$args = array (
+		'post_type' => 'eventos_ceceq',
+		);
+	query_posts( $args );
+	// Start the Loop.
+	$i = 0;
+	while ( have_posts() ) : the_post();
+	$custom = get_post_custom($post->ID);
+	$descripcion = $custom["eventos_ceceq_descripcion"][0];
+	$meta_sd = $custom["eventos_ceceq_startdate"][0];
+	$meta_ed = $custom["eventos_ceceq_enddate"][0];
+	$meta_st = $meta_sd;
+	$meta_et = $meta_ed;
+	if($meta_sd<= $my_time && $meta_ed>=$my_time){
+		$i++;
+		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+		echo "<li class=\"text-center\">";
+		echo "<h2 class=\"titulo\">".get_the_title()."</h2>";
+		echo "<a href='$url' target='_blank'>";
+		the_post_thumbnail( 'medium' );
+		echo "</a>";
+		$meta_sd = date("D, M d, Y", $meta_sd);
+		$meta_ed = date("D, M d, Y", $meta_ed);
+		$meta_st = date("H:i a", $meta_st);
+		$meta_et = date("H:i a", $meta_et);
+		echo "<h4>Descripción del evento: $descripcion</h4>";
+		echo "<h4>Fecha de inicio: $meta_sd</h4>";
+		echo "<h4>Fecha de fin: $meta_ed</h4>";
+		echo "<h4>Hora de inicio: $meta_st</h4>";
+		echo "<h4>Hora de fin: $meta_et</h4>";
+		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
+		$eventcats_html = array();
+		echo "</li>";
+	}
+	endwhile;
+	if(!have_posts()||$i==0)
+		echo "No hay eventos en ese día.";
 	echo "<div class='invisible'>";
 }
 ?>

@@ -133,6 +133,16 @@ nav#menu{
 	margin-top: 10px;
 }
 
+#menu-menu li>ul>li>ul{
+	position: relative;
+	margin-top: -46px;
+	margin-left: 20px;
+	min-height: 100px;
+}
+
+#menu-menu li>ul>li>ul>li{
+}
+
 #menu-menu>li	{
 	display: inline-block;
 }
@@ -150,6 +160,7 @@ nav#menu{
 }
 #menu-menu>li li{
 	min-width: 10vw;
+	max-height: 70px;
 }
 
 #menu-menu li a	{
@@ -203,6 +214,12 @@ nav#menu{
 }
 
 
+header .gobierno{
+	display: inline-block;
+	height: 100px;
+	margin-left: 12vw;
+	width: 19vw;
+}
 
 /*Botón de búsqueda*/
 
@@ -294,6 +311,11 @@ section#search-destroy {
 	width: 25px;
 	height: 25px;
 }
+
+.minimized .gobierno{
+	display: none;
+}
+
 .social li{
 	display: inline-block;
 	width: 50px;
@@ -392,7 +414,6 @@ section#search-destroy {
 	clear: both;
 	position: absolute;
 	z-index: 10;
-	margin-top: -3em;
 	background: white;
 	width: 100%;
 	left: 0;
@@ -408,9 +429,10 @@ section#search-destroy {
 	height: 100px;
 }
 
+
 #copyright{
 	background: #6D6E70;
-	height: 70px;
+	height: 100px;
 	color: white;
 	text-align: center;
 }
@@ -480,6 +502,8 @@ section#search-destroy {
 .calendario-eventos{
 	display: inline-block;
 	vertical-align: top;
+	margin-right: 7vw;
+	margin-left: 4vw;
 }
 /*slider*/
 /* Basic jQuery Slider essential styles */
@@ -602,31 +626,44 @@ article>section>img{
 	height: auto;
 }
 /*RESPONSIVE DESIGN*/
-
+#mobile-menu {
+display: none;
+visibility: hidden;
+}
 @media all and (max-width: 1366px) {
+	#logo{height: 71px;}
+	.social li{ width: 30px; height: 30px; }
+	#searchsubmit{ width: 30px; height: 30px; }
+	#searchsubmit2{ width: 30px; height: 30px; }
+	header .gobierno { margin-left: 6vw; }
 	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 75%;}
 	#menu.minimized{width: 91vw;}
 	#logo.minimized{height: 63px;}
 	#branding.minimized{max-height: 80px;}
 	form#frmContact{width: 50%;}
+	.calendario-eventos{margin-right: 8vw; margin-left: 7vw;}
 }
 @media all and (max-width: 1280px) {
 	#menu.minimized{font-size: .8em;}
+	.calendario-eventos{margin-right: 6vw; margin-left: 0;}
 	#wrapper{width: 800px;}
 	.even-children li div{width: 300px; height: 150px;}
 	ul.bjqs li{width: 700px !important;}
 	#banner-slide{min-width: 700px !important;}
-	#search-destroy input[type="submit"]{width: 25px; height: 25px;}
-	.social li{width: 25px; height: 25px}
+	#search-destroy input[type="submit"]{width: 40px; height: 40px;}
+	.social li{width: 40px; height: 40px}
 	#header input[type="text"], #header input[type="email"]{width: 75%;}
-	.calendario-eventos{width: 42% !important;}
+	.calendario-eventos{width: 42% !important; margin-right: 0;}
+	#search-destroy>div{margin-left: 15px;}
+	#menu{font-size: .9em;}
 }
 @media all and (max-width: 960px) {
-	#search-destroy>div{width: 20%; float: right;}
+	header .gobierno{ display: none; }
+	#search-destroy>div{width: 23%; float: right;}
 	.social li{width: 25px; height: 25px}
 	#search-destroy.minimized>div{width: 100%; float: none;}
 	#search-destroy input[type="submit"]{width: 25px; height: 25px;}
-	#header input[type="text"], #header input[type="email"]{width: 75%;}
+	#header input[type="text"], #header input[type="email"]{width: 74%; padding-left: 0;}
 	#logo{height: 75px;}
 	#menu.minimized{width: 90vw;}
 	#logo.minimized{height: 82px;}
@@ -639,8 +676,17 @@ article>section>img{
 	.calendario-eventos{width: 42% !important;}
 	#twitter-box{margin-right: 0}
 	#facebook-box{margin-left: 0}
+	.calendario-eventos{display: block; margin: 30px auto; padding: 0; }
+	.contenedor-eventos{display: block; margin: 0 auto;}
 }
 @media all and (max-width: 768px) {
+	#wrapper{width: 600px;}
+	.even-children li div{width: 230px; height: 115px;}
+	ul.bjqs li{width: 500px !important;}
+	#banner-slide{min-width: 500px !important;}
+	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 70%;}
+	#twitter-box{display: block; margin: 0 auto 120px auto;}
+	#facebook-box{display: block; margin: 30px auto;}
 }
 @media all and (max-width: 480px) {
 }

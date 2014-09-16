@@ -9,13 +9,15 @@
 get_header(); 
 ?>
 <?php 
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
+wp_enqueue_script( 'jquery' );
+wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slider/js/bjqs-1.3.js' );
 ?>
+<?php blankslate_load_scripts(); ?>
+
 <div id="main-content" class="main-content">
 	<div id="primary" class="content-area">
 		<div id="content" class="site-content" role="main">
-		<?php //echo do_shortcode( '[contact-form-7 id="468" title="Contact form 1"]' );?>
+			<?php //echo do_shortcode( '[contact-form-7 id="468" title="Contact form 1"]' );?>
 			<div id="banner-slide">
 				<?php 
 				$parent_perm = basename(get_permalink($post->post_parent));
@@ -109,9 +111,24 @@ get_header();
 				</ul>
 			<?php endif; wp_reset_query(); ?>
 		</div>
-		<?php echo get_social_media(); ?>
-	</div>		
-</div>
+		<div><h1 class="text-center">Buscar eventos:</h1></div>
+		<div class="calendario-eventos">
+			<form id="ajax-form-all" method="post" action="">
+				<input type="text" hidden=true value='<?php echo $perm ?>' id="perm"/>
+				<input type="text" id="calendar" hidden=true name="calendar"/>
+				<div class="calendario" id="calendario-busca-eventos"></div>
+				<input type="submit" name="buscar" class="invisible" value="buscar"/>
+			</form>
+		</div>
+		<div class="contenedor-eventos">
+			<h1 class="text-center text-capitalize">Eventos del día:</h1>
+			<ul class="list-unstyled" id="posts_container">
+			</ul>
+		</div>
+		<div class="abajo-eventos">
+			<?php echo get_social_media(); ?>
+		</div>
+	</div>
 </div>
 <div id="fb-root"></div>
 
