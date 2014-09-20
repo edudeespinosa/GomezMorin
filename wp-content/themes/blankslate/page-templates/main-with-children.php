@@ -49,7 +49,7 @@ wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slid
 						<li>
 							<?php $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); ?>
 							<a target="_blank" href="<?php /*the_permalink();*/ echo $url ?>">
-								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="480" width="840" title="<?php print the_title(); ?>">
+								<img style="background: white" src="<?php print wp_get_attachment_url( get_post_thumbnail_id(get_the_ID()) ); ?>" height="480" width="980" title="<?php print the_title(); ?>">
 							</a>
 						</li>
 					<?php endwhile; ?>
@@ -62,7 +62,7 @@ wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slid
 				jQuery('#banner-slide').bjqs({
 					animtype      : 'slide',
 					height        : 480,
-					width         : 840,
+					width         : 980,
 					responsive    : true,
 					randomstart   : true
 				});

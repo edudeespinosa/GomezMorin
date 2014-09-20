@@ -523,6 +523,7 @@ p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bot
 #banner-slide{
 	margin-bottom: 60px;
 	margin: 60px auto;
+	margin-left: -50px;
 }
 
 ul.bjqs-controls.v-centered li a{
