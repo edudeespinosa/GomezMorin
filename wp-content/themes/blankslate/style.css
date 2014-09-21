@@ -14,7 +14,7 @@ BlankSlate WordPress Theme © 2011-2014 TidyThemes
 BlankSlate is distributed under the terms of the GNU GPL
 */
 
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{font-size:100%;font:inherit;padding:0;border:0;margin:0;vertical-align:baseline}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}.clear{clear:both}
+html,	div,span,applet,object,iframe,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{font-size:100%;font:inherit;padding:0;border:0;margin:0;vertical-align:baseline}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}.clear{clear:both}
 .sticky{}.bypostauthor{}.wp-caption{}.wp-caption-text{}.gallery-caption{}.alignright{}.alignleft{}.aligncenter{}
 html, body, #container { height: 100%; }
 body > #container { height: auto; min-height: 100%; }
@@ -24,6 +24,7 @@ body > #container { height: auto; min-height: 100%; }
 	padding-right: 50px;
 }
 
+h1,h2,h3,h4,h5,h6{margin: 10px auto}
 
 @font-face {
 	font-family: 'BuxtonSketch';
@@ -43,8 +44,20 @@ body > #container { height: auto; min-height: 100%; }
 	background-size: cover;
 	z-index: -10;
 }
+#backgrounds ul, #backgrounds li, #backgrounds img{
+	height: 100%;
+	width: 100%;
+}
+
+ul.back-images{
+	position: relative;
+}
+
+ul.back-images li{
+	position: absolute;
+}
+
 body{
-	font-family: 'BuxtonSketch';
 	background: transparent 0 0 no-repeat;
 	background-size: cover;
 }
@@ -53,6 +66,15 @@ body{
 	width: 976px;
 	margin: 0 auto;
 	background: rgba(255,255,255,0.3);
+}
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('../../../images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
 }
 
 
@@ -70,6 +92,9 @@ th#tf_col_ev_thumb {width:100px}
 
 .calendario>.ui-datepicker{
 	width: 225px;
+}
+#calendario-busca-eventos>.ui-datepicker{
+	width: 263px;
 }
 
 /*-----------------------------------------------------------------HEADERS--------------------------------------------------------------------------------------------------------*/
@@ -108,6 +133,16 @@ nav#menu{
 	margin-top: 10px;
 }
 
+#menu-menu li>ul>li>ul{
+	position: relative;
+	margin-top: -46px;
+	margin-left: 20px;
+	min-height: 100px;
+}
+
+#menu-menu li>ul>li>ul>li{
+}
+
 #menu-menu>li	{
 	display: inline-block;
 }
@@ -125,6 +160,7 @@ nav#menu{
 }
 #menu-menu>li li{
 	min-width: 10vw;
+	max-height: 70px;
 }
 
 #menu-menu li a	{
@@ -178,6 +214,12 @@ nav#menu{
 }
 
 
+header .gobierno{
+	display: inline-block;
+	height: 100px;
+	margin-left: 12vw;
+	width: 19vw;
+}
 
 /*Botón de búsqueda*/
 
@@ -198,6 +240,14 @@ section#search-destroy {
 	border: 0;
 	color: transparent;
 	background: url('../../../images/lupa2.png') no-repeat;
+	background-size: contain;
+}
+#searchsubmit2{
+	width: 50px; /* width of image */
+	height: 50px; /* height of image */
+	border: 0;
+	color: transparent;
+	background: url('../../../images/pencil.png') no-repeat;
 	background-size: contain;
 }
 
@@ -261,6 +311,11 @@ section#search-destroy {
 	width: 25px;
 	height: 25px;
 }
+
+.minimized .gobierno{
+	display: none;
+}
+
 .social li{
 	display: inline-block;
 	width: 50px;
@@ -341,7 +396,7 @@ section#search-destroy {
 	margin-left: 0;
 }
 
-#search-destroy.minimized #searchsubmit{
+#search-destroy.minimized #searchsubmit, #search-destroy.minimized #searchsubmit2{
 	width: 25px;
 	height: 25px;
 }
@@ -359,7 +414,6 @@ section#search-destroy {
 	clear: both;
 	position: absolute;
 	z-index: 10;
-	margin-top: -3em;
 	background: white;
 	width: 100%;
 	left: 0;
@@ -375,9 +429,10 @@ section#search-destroy {
 	height: 100px;
 }
 
+
 #copyright{
 	background: #6D6E70;
-	height: 70px;
+	height: 100px;
 	color: white;
 	text-align: center;
 }
@@ -393,6 +448,8 @@ section#search-destroy {
 	margin-bottom: 20px;
 	background: white;
 	padding-left: 40px;
+	font-family: 'BuxtonSketch';
+
 }
 
 .titulo-seccion#central{background: #74F7FF; color: black;}
@@ -435,7 +492,8 @@ section#search-destroy {
 /*Calendario de eventos */
 
 .contenedor-eventos{
-	padding: 10px;
+	padding: 32px;
+	padding-top: 10px;
 	display: inline-block;
 	background: white;
 	max-width: 400px;
@@ -444,7 +502,8 @@ section#search-destroy {
 .calendario-eventos{
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 246px;
+	margin-right: 7vw;
+	margin-left: 4vw;
 }
 /*slider*/
 /* Basic jQuery Slider essential styles */
@@ -464,6 +523,7 @@ p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bot
 #banner-slide{
 	margin-bottom: 60px;
 	margin: 60px auto;
+	margin-left: -50px;
 }
 
 ul.bjqs-controls.v-centered li a{
@@ -496,10 +556,11 @@ p.bjqs-caption{
 	background: rgba(255,255,255,0.5);
 }
 
-.content-page-content{
+.content-page-content, .sala-prensa-content{
 	padding: 20px;
 	background: white;
 	font-size: 1.2em;
+	margin-bottom: 30px;
 }
 
 .sala-prensa-content{
@@ -509,17 +570,23 @@ p.bjqs-caption{
 
 /*------------Social feed-------------*/
 .social-media{
-	margin-top: 30px;
+	margin: 30px auto;
+	display: table;
 }
 
 .social-media li{
 	display: inline-block;
 }
 
+.social-media iframe{
+	width: auto !important;
+}
 /*Twitter timeline*/
 #twitter-box{
-	width: 400px;
 	height: 500px;
+	width: 300px;
+	display: inline-block;
+	margin-right: 50px;
 }
 
 /*Facebook timeline*/
@@ -528,7 +595,8 @@ p.bjqs-caption{
 }
 
 #facebook-box{
-	float: right;
+	display: inline-block;
+	margin-left: 50px;
 }
 
 /*Sala de prensa*/
@@ -539,13 +607,87 @@ object{
 	background: transparent;
 }
 
-/*RESPONSIVE DESIGN*/
+.wpcf7-response-output{display: none}
+.invisible{display: none;}
+#posts_container li, .contenedor-eventos>h1{
+	border-bottom: 2px dotted ;
+	margin-bottom: 17px;
+}
+.contenedor-eventos .titulo{
+	text-transform: capitalize;
+}
 
+
+ul.event-data{
+	font-size: 1.3em;
+}
+
+article>section>img{
+	width: 100%;
+	height: auto;
+}
+/*RESPONSIVE DESIGN*/
+#mobile-menu {
+display: none;
+visibility: hidden;
+}
 @media all and (max-width: 1366px) {
+	#logo{height: 71px;}
+	.social li{ width: 30px; height: 30px; }
+	#searchsubmit{ width: 30px; height: 30px; }
+	#searchsubmit2{ width: 30px; height: 30px; }
+	header .gobierno { margin-left: 6vw; }
+	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 75%;}
+	#menu.minimized{width: 91vw;}
+	#logo.minimized{height: 63px;}
+	#branding.minimized{max-height: 80px;}
+	form#frmContact{width: 50%;}
+	.calendario-eventos{margin-right: 8vw; margin-left: 7vw;}
+}
+@media all and (max-width: 1280px) {
+	#menu.minimized{font-size: .8em;}
+	.calendario-eventos{margin-right: 6vw; margin-left: 0;}
+	#wrapper{width: 800px;}
+	.even-children li div{width: 300px; height: 150px;}
+	ul.bjqs li{width: 700px !important;}
+	#banner-slide{min-width: 700px !important;}
+	#search-destroy input[type="submit"]{width: 40px; height: 40px;}
+	.social li{width: 40px; height: 40px}
+	#header input[type="text"], #header input[type="email"]{width: 75%;}
+	.calendario-eventos{width: 42% !important; margin-right: 0;}
+	#search-destroy>div{margin-left: 15px;}
+	#menu{font-size: .9em;}
 }
 @media all and (max-width: 960px) {
+	header .gobierno{ display: none; }
+	#search-destroy>div{width: 23%; float: right;}
+	.social li{width: 25px; height: 25px}
+	#search-destroy.minimized>div{width: 100%; float: none;}
+	#search-destroy input[type="submit"]{width: 25px; height: 25px;}
+	#header input[type="text"], #header input[type="email"]{width: 74%; padding-left: 0;}
+	#logo{height: 75px;}
+	#menu.minimized{width: 90vw;}
+	#logo.minimized{height: 82px;}
+	#branding.minimized{max-height: 87px;}
+	#menu-menu{font-size: .9em;}
+	#wrapper{width: 700px;}
+	.even-children li div{width: 250px; height: 125px;}
+	ul.bjqs li{width: 600px !important;}
+	#banner-slide{min-width: 600px !important;}
+	.calendario-eventos{width: 42% !important;}
+	#twitter-box{margin-right: 0}
+	#facebook-box{margin-left: 0}
+	.calendario-eventos{display: block; margin: 30px auto; padding: 0; }
+	.contenedor-eventos{display: block; margin: 0 auto;}
 }
 @media all and (max-width: 768px) {
+	#wrapper{width: 600px;}
+	.even-children li div{width: 230px; height: 115px;}
+	ul.bjqs li{width: 500px !important;}
+	#banner-slide{min-width: 500px !important;}
+	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 70%;}
+	#twitter-box{display: block; margin: 0 auto 120px auto;}
+	#facebook-box{display: block; margin: 30px auto;}
 }
 @media all and (max-width: 480px) {
 }

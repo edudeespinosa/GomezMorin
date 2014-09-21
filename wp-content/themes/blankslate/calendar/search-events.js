@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {    
-    var valor = '';    
+    var valor = '';
     $('#posts_container').html('');
     jQuery.post(MyAjax.url, {
         nonce: MyAjax.nonce,

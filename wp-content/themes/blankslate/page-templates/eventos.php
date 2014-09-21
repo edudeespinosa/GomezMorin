@@ -27,11 +27,12 @@ get_header(); ?>
 					<form id="ajax-form" method="post" action="">
 						<input type="text" hidden=true value='<?php echo $perm ?>' id="perm"/>
 						<input type="text" id="calendar" hidden=true name="calendar"/>
-						<div class="calendario"></div>
-						<input type="submit" name="buscar" value="buscar"/>
+						<div class="calendario" id="calendario-busca-eventos"></div>
+						<input type="submit" name="buscar" class="invisible" value="buscar"/>
 					</form>
 				</div>
 				<div class="contenedor-eventos">
+					<h1 class="text-center text-capitalize">Eventos del día:</h1>
 					<ul class="list-unstyled" id="posts_container">
 					</ul>
 				</div>

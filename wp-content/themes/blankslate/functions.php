@@ -19,8 +19,11 @@ function blankslate_load_scripts()
 		wp_enqueue_script('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery.ui.datepicker.js');
 		wp_enqueue_script( 'mi-script-ajax',get_bloginfo('template_url') . '/calendar/search-events.js', array( 'jquery' ) );
 		wp_enqueue_script('custom_script', get_bloginfo('template_url').'/calendar/functions2.js', array('jquery'));
+		wp_enqueue_script( 'mi-script-ajax_2',get_bloginfo('template_url') . '/calendar/search-all-events.js', array( 'jquery' ) );
+		wp_enqueue_script('custom_script_2', get_bloginfo('template_url').'/calendar/functions3.js', array('jquery'));
 		wp_enqueue_script('jquery-ui', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.min.js', array('jquery'));
 		wp_enqueue_style('ui-datepicker', get_bloginfo('template_url') . '/calendar/jquery-ui-1.8.9.custom.css');
+		wp_enqueue_style('bootstrap', "http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css");
 		wp_localize_script( 'mi-script-ajax', 'MyAjax', array( 'url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('myajax-post-comment-nonce' )) );
 	}
 }
@@ -253,13 +256,62 @@ wp_create_nonce( 'ceceq-events-nonce' ) . '" />';
 
 // - output -
 ?>
+
+<style>
+	ul.event-data{
+		font-size: 1.3em;
+	}
+	ul.event-data li{
+		display: inline-block;
+	}
+	ul.event-data li label{
+		display: block;
+	}
+	.col-md-3{width: 33.333333%;}
+</style>
 <div class="ceceq-meta">
-	<ul>
-		<li><label>Fecha de inicio</label><input readonly="true" name="eventos_ceceq_startdate" class="tfdate" value="<?php echo $clean_sd; ?>" /></li>
-		<li><label>Fecha de fin</label><input readonly="true" name="eventos_ceceq_enddate" class="tfdate" value="<?php echo $clean_ed; ?>" /></li>
-		<li><label>Hora de inicio</label><input name="eventos_ceceq_starttime" value="<?php echo $clean_st; ?>" type="time"/><em>Formato de 24h(7pm = 19:00)</em></li>
-		<li><label>Hora de fin</label><input name="eventos_ceceq_endtime" value="<?php echo $clean_et; ?>" type="time"/><em>Formato de 24h (7pm = 19:00)</em></li>
-		<li><label>Descripción del evento</label><textarea name="eventos_ceceq_descripcion"><?php echo $meta_desc ?></textarea></li>
+	<ul class = "event-data row">
+		<?php 
+		$start = "00:00";
+		$end = "23:30";
+
+		$tStart = strtotime($start);
+		$tEnd = strtotime($end);
+		$tNow = $tStart;
+		?>
+		<li class="col-md-3"><label>Fecha de inicio</label><input readonly="true" name="eventos_ceceq_startdate" class="tfdate" value="<?php echo $clean_sd; ?>" /></li>
+		<li class="col-md-3"><label>Fecha de fin</label><input readonly="true" name="eventos_ceceq_enddate" class="tfdate" value="<?php echo $clean_ed; ?>" /></li>
+		<li class="col-md-3"><label>Hora de inicio</label>
+
+		<select name="eventos_ceceq_starttime">
+		<?php echo "<option value='".$clean_st."' selected>".$clean_st."</option>"?>
+			<?php while($tNow <= $tEnd){
+				echo "<option value='".date("H:i",$tNow)."'>".date("H:i",$tNow)."</option>";
+				$tNow = strtotime('+30 minutes',$tNow);
+			} 
+			?>
+		</select>
+		<em>24h</em></li>
+
+		<?php 
+		$start = "00:00";
+		$end = "23:30";
+
+		$tStart = strtotime($start);
+		$tEnd = strtotime($end);
+		$tNow = $tStart;
+		 ?>
+		 <li class="col-md-3"><label>Hora de fin</label>
+		 <select name="eventos_ceceq_endtime">
+		<?php echo "<option value='".$clean_et."' selected>".$clean_et."</option>"?>
+			<?php while($tNow <= $tEnd){
+				echo "<option value='".date("H:i",$tNow)."'>".date("H:i",$tNow)."</option>";
+				$tNow = strtotime('+30 minutes',$tNow);
+			} 
+			?>
+		</select>
+		<em>24h </em>
+		<li class="col-md-3"><label>Descripción del evento</label><textarea cols=80 rows=5 name="eventos_ceceq_descripcion"><?php echo $meta_desc ?></textarea></li>
 	</ul>
 </div>
 
@@ -362,18 +414,22 @@ function my_scripts_method() {
 }
 
 //add_action( 'wp_enqueue_scripts', 'my_scripts_method' );
+function extra_setup() {
+register_nav_menu ('primary mobile', __( 'Navigation Mobile', 'blankslate' ));
+}
+add_action( 'after_setup_theme', 'extra_setup' );
 
 function get_social_media(){
-	return '		
-	<ul class="social-media">
-		<li id="twitter-box">
+	return '
+	<div class="social-media">
+		<div id="twitter-box" class="">
 			<a class="twitter-timeline" href="https://twitter.com/Central_CECEQ" data-widget-id="487090241400893440">Tweets by @Central_CECEQ</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-		</li>
-		<li id="facebook-box">
-			<div class="fb-like-box" data-href="https://www.facebook.com/centralCECEQ" data-width="400" data-height="600" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
-		</li>
-	</ul>
+		</div>
+		<div id="facebook-box" class="">
+			<div class="fb-like-box" data-href="https://www.facebook.com/centralCECEQ" data-height="600" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="true" data-show-border="true"></div>
+		</div>
+	</div>
 	';
 }
 
@@ -383,6 +439,66 @@ function get_suscription_form(){
 
 add_action('wp_ajax_buscar_posts', 'buscar_posts_callback');
 add_action('wp_ajax_nopriv_buscar_posts', 'buscar_posts_callback');
+ 
+function custom_posts_join( $join, $query ){
+ 
+    global $wpdb;
+ 
+    //  if current query is the main query and a search...
+    if( is_main_query() && is_search() ){
+ 
+        //  join term_relationships, term_taxonomy, and terms into the current SQL where clause
+        $join .= "
+        INNER JOIN
+          {$wpdb->term_relationships} ON {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id
+        INNER JOIN
+          {$wpdb->term_taxonomy} ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id
+        INNER JOIN
+          {$wpdb->terms} ON {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id ";
+ 
+    }
+ 
+    return $join;
+ 
+}
+add_filter( 'posts_join', 'custom_posts_join', 10, 2 );
+function custom_posts_where( $where, $query ){
+ 
+    global $wpdb;
+ 
+    //  if current query is the main query and a search...
+    if( is_main_query() && is_search() ){
+ 
+        //  explictly search category and post_tag taxonomies
+        $where .= " OR ( {$wpdb->term_taxonomy}.taxonomy IN('category', 'post_tag') ";
+ 
+        $where .= " AND {$wpdb->terms}.name LIKE '%" . $wpdb->escape( get_query_var('s') ) . "%' )";
+ 
+    }
+ 
+    //  return the where clause
+    return $where;
+ 
+}
+add_filter( 'posts_where', 'custom_posts_where', 10, 2 );
+
+function custom_posts_groupby( $groupby, $query ){
+ 
+    global $wpdb;
+ 
+    //  if current query is the main query and a search...
+    if( is_main_query() && is_search() ){
+ 
+        //  assign the GROUPBY
+        $groupby = "{$wpdb->posts}.ID";
+ 
+    }
+ 
+    //  return the GROUP BY clause
+    return $groupby;
+ 
+}
+add_filter( 'posts_groupby', 'custom_posts_groupby', 10, 2 );
 
 function buscar_posts_callback() {
 	global $post;
@@ -404,22 +520,7 @@ function buscar_posts_callback() {
 				'terms' => $perm
 				)
 			),
-		/*array(
-			'relation' => 'and',
-			array(
-				'key' => 'eventos_ceceq_startdate',
-				'value' => ($my_time),
-				'compare' => '>=',
-				'type' => 'NUMERIC'
-				),
-			array(
-				'key' => 'eventos_ceceq_enddate[0]',
-				'value' => ($my_time),
-				'compare' => '>=',
-				'type' => 'NUMERIC'
-				)
-	)*/
-	);
+		);
 	query_posts( $args );
 	// Start the Loop.
 	$i = 0;
@@ -433,6 +534,8 @@ function buscar_posts_callback() {
 	if($meta_sd<= $my_time && $meta_ed>=$my_time){
 		$i++;
 		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+		echo "<li class=\"text-center\">";
+		echo "<h2 class=\"titulo\">".get_the_title()."</h2>";
 		echo "<a href='$url' target='_blank'>";
 		the_post_thumbnail( 'medium' );
 		echo "</a>";
@@ -440,25 +543,74 @@ function buscar_posts_callback() {
 		$meta_ed = date("D, M d, Y", $meta_ed);
 		$meta_st = date("H:i a", $meta_st);
 		$meta_et = date("H:i a", $meta_et);
-		echo "<li>";
-		echo "<p style='font-size:2em;'>".get_the_title()."</p>";
-		echo "<p>Descripción del evento: $descripcion</p>";
-		echo "<p>Fecha de inicio: $meta_sd</p>";
-		echo "<p>Fecha de fin: $meta_ed</p>";
-		echo "<p>Hora de inicio: $meta_st</p>";
-		echo "<p>Hora de fin: $meta_et</p>";
+		echo "<h4>Descripción del evento: $descripcion</h4>";
+		echo "<h4>Fecha de inicio: $meta_sd</h4>";
+		echo "<h4>Fecha de fin: $meta_ed</h4>";
+		echo "<h4>Hora de inicio: $meta_st</h4>";
+		echo "<h4>Hora de fin: $meta_et</h4>";
 		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
 		$eventcats_html = array();
-		if ($eventcats) {
-			foreach ($eventcats as $eventcat)
-				array_push($eventcats_html, $eventcat->name);
-			echo implode($eventcats_html, ", ");
-		}
 		echo "</li>";
 	}
 	endwhile;
 	if(!have_posts()||$i==0)
-		echo "No hay eventos con sus parámetros.";
+		echo "No hay eventos en ese día.";
+	echo "<div class='invisible'>";
+}
+
+add_action('wp_ajax_buscar_todos_posts', 'buscar_todos_posts_callback');
+add_action('wp_ajax_nopriv_buscar_todos_posts', 'buscar_todos_posts_callback');
+
+
+function buscar_todos_posts_callback() {
+	global $post;
+	$nonce = $_POST['nonce'];
+	if ( ! wp_verify_nonce( $nonce, 'myajax-post-comment-nonce' ) )
+		die ( 'Te atrapamos maldito!');
+	$my_time = time();
+	$fecha = $_POST['valor'];
+	if($fecha!=null)
+		$my_time = strtotime($fecha); 
+
+
+	$args = array (
+		'post_type' => 'eventos_ceceq',
+		);
+	query_posts( $args );
+	// Start the Loop.
+	$i = 0;
+	while ( have_posts() ) : the_post();
+	$custom = get_post_custom($post->ID);
+	$descripcion = $custom["eventos_ceceq_descripcion"][0];
+	$meta_sd = $custom["eventos_ceceq_startdate"][0];
+	$meta_ed = $custom["eventos_ceceq_enddate"][0];
+	$meta_st = $meta_sd;
+	$meta_et = $meta_ed;
+	if(($meta_st<= $my_time+86399 && $meta_et>=$my_time)){
+		$i++;
+		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+		echo "<li class=\"text-center\">";
+		echo "<h2 class=\"titulo\">".get_the_title()."</h2>";
+		echo "<a href='$url' target='_blank'>";
+		the_post_thumbnail( 'medium' );
+		echo "</a>";
+		$meta_sd = date("d/m/Y", $meta_sd);
+		$meta_ed = date("d/m/Y", $meta_ed);
+		$meta_st = date("H:i a", $meta_st);
+		$meta_et = date("H:i a", $meta_et);
+		echo "<h4>Descripción del evento: $descripcion</h4>";
+		echo "<h4>Fecha de inicio: $meta_sd</h4>";
+		echo "<h4>Fecha de fin: $meta_ed</h4>";
+		echo "<h4>Hora de inicio: $meta_st</h4>";
+		echo "<h4>Hora de fin: $meta_et</h4>";
+		$eventcats = get_the_terms($post->ID, "categorias_ceceq");
+		$eventcats_html = array();
+		echo "</li>";
+	}
+	endwhile;
+	if(!have_posts()||$i==0)
+		echo "No hay eventos en ese día.";
+	echo "<div class='invisible'>";
 }
 ?>
 

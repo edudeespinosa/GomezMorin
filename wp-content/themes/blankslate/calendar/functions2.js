@@ -48,6 +48,9 @@ jQuery(document).ready(function($) {
         minDate: new Date(today.getFullYear(), today.getMonth(), 1),
         maxDate: new Date(today.getFullYear(), today.getMonth(), getMaxDay(today.getMonth())),
         altField: "#calendar",
-        altFormat: 'dd-mm-yy'
+        altFormat: 'dd-mm-yy',
+        onSelect: function(){
+            $('#ajax-form').submit();
+        }
     });
 });
