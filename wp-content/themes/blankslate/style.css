@@ -649,7 +649,7 @@ visibility: hidden;
 	.calendario-eventos{margin-right: 6vw; margin-left: 0;}
 	#wrapper{width: 800px;}
 	.even-children li div{width: 300px; height: 150px;}
-	ul.bjqs li{width: 700px !important;}
+	ul.bjqs li{/*width: 700px !important;*/}
 	#banner-slide{min-width: 700px !important;}
 	#search-destroy input[type="submit"]{width: 40px; height: 40px;}
 	.social li{width: 40px; height: 40px}
