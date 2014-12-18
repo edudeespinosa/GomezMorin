@@ -522,7 +522,8 @@ p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bot
 #banner-fade,
 #banner-slide{
 	margin-bottom: 60px;
-	margin: 60px auto;
+	margin-left: -50px;
+	margin-right: -50px;
 }
 
 ul.bjqs-controls.v-centered li a{
@@ -646,10 +647,11 @@ visibility: hidden;
 @media all and (max-width: 1280px) {
 	#menu.minimized{font-size: .8em;}
 	.calendario-eventos{margin-right: 6vw; margin-left: 0;}
-	#wrapper{width: 800px;}
+	/*#wrapper{width: 800px;}*/
 	.even-children li div{width: 300px; height: 150px;}
-	ul.bjqs li{/*width: 700px !important;*/}
-	#banner-slide{min-width: 700px !important;}
+	/*ul.bjqs li{width: 800px !important;}
+	#banner-slide{max-width: 800px !important;}
+	.bjqs-wrapper{width: 800px !important;}*/
 	#search-destroy input[type="submit"]{width: 40px; height: 40px;}
 	.social li{width: 40px; height: 40px}
 	#header input[type="text"], #header input[type="email"]{width: 75%;}
@@ -671,8 +673,7 @@ visibility: hidden;
 	#menu-menu{font-size: .9em;}
 	#wrapper{width: 700px;}
 	.even-children li div{width: 250px; height: 125px;}
-	ul.bjqs li{width: 600px !important;}
-	#banner-slide{min-width: 600px !important;}
+	#banner-slide{min-width: 700px !important;}
 	.calendario-eventos{width: 42% !important;}
 	#twitter-box{margin-right: 0}
 	#facebook-box{margin-left: 0}
@@ -682,8 +683,8 @@ visibility: hidden;
 @media all and (max-width: 768px) {
 	#wrapper{width: 600px;}
 	.even-children li div{width: 230px; height: 115px;}
-	ul.bjqs li{width: 500px !important;}
-	#banner-slide{min-width: 500px !important;}
+	ul.bjqs li{width: 600px !important;}
+	#banner-slide{min-width: 600px !important;}
 	#header.minimized input[type="text"], #header.minimized input[type="email"]{width: 70%;}
 	#twitter-box{display: block; margin: 0 auto 120px auto;}
 	#facebook-box{display: block; margin: 30px auto;}
