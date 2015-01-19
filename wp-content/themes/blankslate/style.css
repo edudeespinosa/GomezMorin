@@ -465,6 +465,7 @@ section#search-destroy {
 
 .subsecciones{
 	display: inline-block;
+	width: 100%;
 }
 
 .even-children li{
@@ -496,7 +497,7 @@ section#search-destroy {
 	padding-top: 10px;
 	display: inline-block;
 	background: white;
-	max-width: 400px;
+	max-width: 380px;
 }
 
 .calendario-eventos{
@@ -626,6 +627,12 @@ article>section>img{
 	width: 100%;
 	height: auto;
 }
+
+.text-center{
+	color: black;
+	font-weight: bolder;
+}
+
 /*RESPONSIVE DESIGN*/
 #mobile-menu {
 display: none;

@@ -1,6 +1,6 @@
 <?php 
 /**
- * Template Name: Eventos
+ * Template Name: Página con eventos 
  *
  * @package WordPress
  * @subpackage Gomez Morin

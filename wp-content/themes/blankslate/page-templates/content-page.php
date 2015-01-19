@@ -1,6 +1,6 @@
 <?php 
 /**
- * Template Name: Página con contenido
+ * Template Name: Página con contenido estático
  *
  * @package WordPress
  * @subpackage Gomez Morin

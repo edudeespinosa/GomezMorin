@@ -1,6 +1,6 @@
 <?php 
 /**
- * Template Name: Página con submenus
+ * Template Name: Página con subsecciones
  *
  * @package WordPress
  * @subpackage Gomez Morin
@@ -87,7 +87,7 @@ wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slid
 			?>
 			<?php if ( $parent->have_posts() ) : ?>
 				<?php if( $contador %2 == 0 ) :?>
-					<ul class="even-children">
+					<ul class="even-children inline">
 					<?php else : ?>
 						<ul class="even-children inline">
 						<?php endif; ?>
@@ -110,7 +110,8 @@ wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slid
 				</ul>
 			<?php endif; wp_reset_query(); ?>
 		</div>
-		<div><h1 class="text-center">Buscar eventos:</h1></div>
+		<div>
+		<div><b><h1 class="text-center" >Buscar eventos:</h1></b></div>
 		<div class="calendario-eventos">
 			<form id="ajax-form-all" method="post" action="">
 				<input type="text" hidden=true value='<?php echo $perm ?>' id="perm"/>
@@ -123,6 +124,7 @@ wp_enqueue_script( 'custom_script', get_template_directory_uri() . '/plugin-slid
 			<h1 class="text-center text-capitalize">Eventos del día:</h1>
 			<ul class="list-unstyled" id="posts_container">
 			</ul>
+		</div>
 		</div>
 		<div class="abajo-eventos">
 			<h1>FOTOS:</h1>

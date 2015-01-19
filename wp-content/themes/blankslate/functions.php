@@ -531,7 +531,7 @@ function buscar_posts_callback() {
 	$meta_ed = $custom["eventos_ceceq_enddate"][0];
 	$meta_st = $meta_sd;
 	$meta_et = $meta_ed;
-	if($meta_sd<= $my_time && $meta_ed>=$my_time){
+	if($meta_st<= $my_time+86399 && $meta_ed>=$my_time){
 		$i++;
 		$url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 		echo "<li class=\"text-center\">";
